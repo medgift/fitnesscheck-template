@@ -18,7 +18,7 @@ const uiConfig = {
 
 function App() {
   // Local signed-in state.
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isSignedIn, setIsSignedIn] = useState(null);
 
   // Listen to the Firebase Auth state and set the local state.
   useEffect(() => {
@@ -36,6 +36,15 @@ function App() {
   const handleSignOutClick = async () => {
     await firebaseApp.auth().signOut();
   };
+
+  // Not initialized yet - Render loading message
+  if (isSignedIn === null) {
+    return (
+      <div className="App">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   // Not signed in - Render auth screen
   if (!isSignedIn)
