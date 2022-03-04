@@ -3,6 +3,9 @@ import firebase from "firebase/compat/app";
 import firebaseApp from "./initFirebase";
 import { StyledFirebaseAuth } from "react-firebaseui";
 import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import Questionnaire from "./screens/Questionnaire";
+import Home from "./screens/Home";
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -32,11 +35,6 @@ function App() {
     return () => unregisterAuthObserver();
   }, []);
 
-  // Sign out
-  const handleSignOutClick = async () => {
-    await firebaseApp.auth().signOut();
-  };
-
   // Not initialized yet - Render loading message
   if (isSignedIn === null) {
     return (
@@ -60,8 +58,10 @@ function App() {
   // Signed in - Render app
   return (
     <div className="App">
-      <h1>Welcome to the Fitness Check!</h1>
-      <button onClick={handleSignOutClick}>Sign Out</button>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/questionnaire" element={<Questionnaire />} />
+      </Routes>
     </div>
   );
 }
